@@ -6,7 +6,16 @@ export async function GET(req: NextRequest) {
   const productId = await req.nextUrl.searchParams.get("id");
   console.log("DB connecting...", productId);
   await dbConnection();
-  const result: any = await productInfo.findOne({ productId });
-  console.log(result.specs);
-  return new Response(JSON.stringify({ data: result }));
+  try {
+    const productArray = productId?.split(",").map((item) => Number(item));
+    console.log("Agg", productArray);
+    const result = await productInfo.find({ productId: productArray });
+    console.log("Product array data: ", result);
+    if (!result) {
+      throw Error("No product found");
+    }
+    return new Response(JSON.stringify({ data: result }));
+  } catch (err) {
+    throw Error("Product not found!");
+  }
 }

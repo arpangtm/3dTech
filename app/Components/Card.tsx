@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import Skeleton from "react-loading-skeleton";
 
 interface Card_Prop {
   children?: never[];
@@ -10,7 +11,15 @@ interface Card_Prop {
   name: string;
   stars: number;
   price: number;
+  toast: any;
   id: number;
+}
+
+function addToCart(email: string, id: number) {
+  const res = fetch("/api/checkoutItems", {
+    method: "POST",
+    body: JSON.stringify({ email, productId: id }),
+  });
 }
 
 export default function Card({
@@ -20,6 +29,7 @@ export default function Card({
   name,
   stars,
   price,
+  toast,
   id,
 }: Card_Prop) {
   // console.log(wish)
@@ -55,7 +65,7 @@ export default function Card({
           <Image
             height={300}
             width={300}
-            className="p-8 rounded-t-lg ml-5"
+            className="p-8 rounded-t-lg ml-5 h-80 w-full"
             src={img}
             alt="product image"
           />
@@ -80,7 +90,7 @@ export default function Card({
       <div className="px-5 pb-5">
         <a href="#">
           <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-            {name}
+            {name || <Skeleton></Skeleton>}
           </h5>
         </a>
         <div className="flex items-center mt-2.5 mb-5">
@@ -143,17 +153,21 @@ export default function Card({
             {`\$${price}`}
           </span>
           <a
-            href={`/${id}`}
+            href={`/product?id=${id}`}
             className="text-white border-2 border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-700  hover:scale-110 dark:focus:ring-blue-800"
           >
             See In 3d
           </a>
-          <a
-            href={`/${id}`}
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600  hover:border-2 dark:hover:border-blue-700 hover:bg-transparent dark:focus:ring-blue-800"
+          <div
+            onClick={() => {
+              addToCart(session?.user?.email!, id);
+              toast(true);
+              setTimeout(() => toast(false), 1000);
+            }}
+            className="text-white bg-blue-700 hover:bg-blue-800 cursor-pointer focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600  hover:border-2 dark:hover:border-blue-700 hover:bg-transparent dark:focus:ring-blue-800"
           >
             Add to cart
-          </a>
+          </div>
         </div>
       </div>
     </div>

@@ -6,12 +6,21 @@ import { OrbitControls, Stage } from "@react-three/drei";
 import { Iphone12ProBlue } from "../../JSXModel/iphone";
 import { AlienwareLaptop } from "../../JSXModel/AlienwareLaptop";
 import { Gamingchair } from "../../JSXModel/gamingchair";
-import { Macbookpro } from "../../JSXModel/macbookpro";
 import { JBLHeadphones } from "../../JSXModel/JBLHeadphones";
 import { AsusRog } from "../../JSXModel/AsusRog";
 import { MISmarTV } from "../../JSXModel/MISmartTV";
 
-export default function Viewer() {
+const productIdMap = {
+  1: <Iphone12ProBlue />,
+  2: <AlienwareLaptop />,
+  3: <Gamingchair />,
+  4: <AlienwareLaptop />,
+  5: <MISmarTV />,
+  6: <JBLHeadphones />,
+  7: <AsusRog />,
+};
+
+export default function Viewer({ productId }: { productId: any }) {
   const ref = useRef();
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
@@ -37,13 +46,7 @@ export default function Viewer() {
             environment="city"
           >
             false
-            {/* <Iphone12ProBlue rotation={[0, Math.PI / 4, 0]} /> */}
-            {/* <AlienwareLaptop></AlienwareLaptop> */}
-            {/* <Gamingchair></Gamingchair> */}
-            {/* <Macbookpro></Macbookpro> */}
-            {/* <JBLHeadphones></JBLHeadphones> */}
-            {/* <AsusRog></AsusRog> */}
-            <MISmarTV></MISmarTV>
+            {productIdMap[productId]}
             false
           </Stage>
         </Suspense>

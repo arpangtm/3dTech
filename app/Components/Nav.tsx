@@ -11,20 +11,17 @@ interface Active {
 }
 
 //Checks if loged in or not and displays returns signup button or Profile Picture
-function configureButton() {
-  const { data: session } = useSession();
+function configureButton(session: any) {
   const { push } = useRouter();
+  console.log(session?.user);
   const button = session ? (
     <div className="flex space-x-5">
-      <button className="flex items-center space-x-2 px-2 py-1 bg-white text-black rounded-md">
-        <BsFillCartFill></BsFillCartFill>CheckOut
-      </button>
       <Image
-        width={50}
-        height={50}
+        width={200}
+        height={100}
         alt="ProfilePic"
-        src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
-        className={"rounded-full"}
+        src={session?.user?.image!}
+        className={"rounded-full h-14 w-14"}
       ></Image>
     </div>
   ) : (
@@ -34,7 +31,7 @@ function configureButton() {
           push("/login");
         }}
         className={
-          "p-2 bg-transparent border-2 border-white-700 text-white rounded-md hover:bg-white hover:text-black hover:border-0 hover:scale-110"
+          "p-2 bg-transparent border-2 border-white-700 text-white rounded-md hover:bg-white hover:text-black"
         }
       >
         Login
@@ -44,7 +41,7 @@ function configureButton() {
           push("/signup");
         }}
         className={
-          "p-3 bg-white text-black rounded-md hover:bg-transparent hover:scale-90 hover:text-white hover:border-2"
+          "p-2 bg-white border-2 border-white-700 text-black rounded-md hover:bg-transparent hover:text-white"
         }
       >
         Sign Up
@@ -58,7 +55,13 @@ function configureButton() {
 
   if (session) {
     return (
-      <Menu as="div" className="relative inline-block text-left">
+      <Menu as="div" className="relative text-left flex">
+        <a
+          href="/checkout"
+          className="flex items-center space-x-2 px-2 py-1 bg-white text-black rounded-md"
+        >
+          <BsFillCartFill></BsFillCartFill>CheckOut
+        </a>
         <div>
           <Menu.Button>{button}</Menu.Button>
         </div>
@@ -88,7 +91,7 @@ function configureButton() {
                         width={30}
                         height={30}
                         alt="ProfilePic"
-                        src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg"
+                        src={session?.user?.image!}
                         className={"rounded-full mr-3"}
                       ></Image>
                       <div>
@@ -154,6 +157,10 @@ function configureButton() {
 }
 
 export default function Navbar() {
+  const { data: session, status } = useSession();
+  if (status == "loading") {
+    return <div></div>;
+  }
   return (
     <>
       <section
@@ -161,13 +168,19 @@ export default function Navbar() {
           "flex justify-between items-center my-5 mx-3 sm:mx-4 lg:mx-9"
         }
       >
-        <h1 className={"text-5xl"}>TS</h1>
+        <a href="/" className={"text-5xl"}>
+          TS
+        </a>
         <div className={"flex space-x-12 items-center"}>
           <ul className={"flex space-x-10"}>
-            <li>Latest</li>
-            <li>Wishlist</li>
+            <a href="#">
+              <li>Latest</li>{" "}
+            </a>
+            <a href="/wishlist">
+              <li>Wishlist</li>{" "}
+            </a>
           </ul>
-          {configureButton()}
+          {configureButton(session)}
         </div>
       </section>
     </>

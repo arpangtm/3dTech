@@ -9,7 +9,7 @@ const productReviewSchema = new mongoose.Schema({
 
 const productSchema = new mongoose.Schema({
   productId: Number,
-  productName:String,
+  productName: String,
   productInfo: String,
   aboutProduct: String,
   productReviews: [productReviewSchema],
