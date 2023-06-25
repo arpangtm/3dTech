@@ -32,11 +32,9 @@ export default function Card({
   toast,
   id,
 }: Card_Prop) {
-  // console.log(wish)
   const [fav, setFav] = useState(false);
 
   useEffect(() => {
-    console.log("Settin fav");
     setFav(wish);
   }, [wish]);
 
@@ -46,7 +44,6 @@ export default function Card({
     if (status != "authenticated") {
       return alert("You should be logged in!");
     }
-    console.log(price);
     setFav(fav ? false : true);
     const response = await fetch("/api/wishlist", {
       method: "POST",

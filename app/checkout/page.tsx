@@ -5,15 +5,12 @@ import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 import getStripe from "@/lib/mongoose/Stripe/payment";
 import { useRouter } from "next/navigation";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
 
 const sumPrices = (list: any) => {
   let total = 0;
   list.forEach((element: { price: number }) => {
     total += element.price;
   });
-  console.log(total);
   return total;
 };
 
@@ -24,10 +21,8 @@ function checkout() {
   const [totalCost, setCost] = useState(Number);
   const [checkoutState, setcheckoutState] = useState("static");
   const { data: session, status } = useSession();
-  console.log(productList);
 
   async function handleSubmit() {
-    console.log(window.location.host);
     setcheckoutState("loading");
     const checkoutSession = await fetch("/api/checkout_session", {
       method: "POST",
@@ -39,8 +34,6 @@ function checkout() {
     });
     const data = await checkoutSession.json();
     setcheckoutState("static");
-    console.log(data);
-    console.log("Url", data.url);
     push(data.url);
   }
 
@@ -57,7 +50,6 @@ function checkout() {
       }),
     });
     const { data } = await response.json();
-    console.log(data);
     const list = await fetchItemsFromId(data.cart);
     setProducts(list);
     setCost(sumPrices(list));
@@ -66,7 +58,6 @@ function checkout() {
   const fetchItemsFromId = async (productIds: Array<Number>) => {
     const response = await fetch(`/api/productInfo?id=${productIds}`);
     const list = await response.json();
-    console.log(list);
     return list.data;
   };
 
@@ -80,7 +71,6 @@ function checkout() {
           }
         );
         const { data } = await response.json();
-        console.log(data);
 
         const list = await fetchItemsFromId(data.cart);
         setProducts(list);
@@ -90,17 +80,13 @@ function checkout() {
     })();
   }, [status]);
   if (status == "loading" || !dataFetched) {
-    return (
-      <div>
-        <Skeleton count={5}></Skeleton>
-      </div>
-    );
+    return <div>Loading...</div>;
   }
   return (
     <div>
       <h1 className="text-3xl text-center font-bold">Checkout</h1>
-      <div className="flex flex-1 justify-center gap-8 mt-10">
-        <div className="border-gray-800 border-2 p-5">
+      <div className="flex flex-1 flex-col md:flex-row justify-center gap-8 mt-10">
+        <div className="border-gray-800 border-2 p-5 mb-36">
           {productList.map(
             (item: {
               img: string;
@@ -127,10 +113,10 @@ function checkout() {
                     //   onClick={() => push(`/product?id=${item.productId}`)}
                   >
                     <h1 className="font-bold text-xl md:text-2xl">
-                      Item Name: {item.productName || <Skeleton></Skeleton>}
+                      Item Name: {item.productName}
                     </h1>
                     <h1 className="font-bold text-lg md:text-xl">
-                      Price: ${item.price || <Skeleton></Skeleton>}
+                      Price: ${item.price}
                     </h1>
                   </div>
                   <div className="text-red-600 text-lg md:text-3xl w-max flex flex-col gap-5 font-bold">
@@ -150,13 +136,11 @@ function checkout() {
         </div>
 
         <div className=" max-h-min">
-          <div className="max-h-min border-gray-800 border-2 p-5 text-center flex flex-col gap-5">
+          <div className="max-h-min fixed bottom-0 bg-black w-full md:relative border-gray-800 border-2 p-5 flex justify-center items-center flex-col gap-5">
             <h1 className="text-2xl font-bold">
-              Total Items:{productList.length || <Skeleton></Skeleton>}
+              Total Items:{productList.length}
             </h1>
-            <h1 className="text-2xl font-bold">
-              Total Cost: ${totalCost || <Skeleton></Skeleton>}
-            </h1>
+            <h1 className="text-2xl font-bold">Total Cost: ${totalCost}</h1>
             <button
               type="submit"
               onClick={() => handleSubmit()}

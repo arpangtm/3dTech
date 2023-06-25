@@ -53,8 +53,6 @@ function product() {
     productReviews: [{ userId: null, stars: null, review: "" }],
     specs: "",
   });
-  console.log(productData.specs);
-  console.log(productId);
   useEffect(() => {
     (async function () {
       const response = await fetch(
@@ -64,7 +62,6 @@ function product() {
         }
       );
       const { data } = await response.json();
-      console.log(data);
       if (data.length == 0) {
         alert("This product is currently unavailable!");
         push("/");

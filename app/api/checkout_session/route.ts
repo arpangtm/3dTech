@@ -9,9 +9,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(req: NextRequest) {
   const { amount, url, productList } = await req.json();
-  console.log("URL:", url);
 
-  const line_items = productList.map((item:any) => {
+  const line_items = productList.map((item: any) => {
     return {
       price_data: {
         currency: "usd",
@@ -27,7 +26,6 @@ export async function POST(req: NextRequest) {
       quantity: 1,
     };
   });
-  console.log(line_items[0].price_data.product_data.images);
   try {
     const params: Stripe.Checkout.SessionCreateParams = {
       line_items,
@@ -37,9 +35,8 @@ export async function POST(req: NextRequest) {
     };
     const checkoutSession = stripe.checkout.sessions.create(params);
     const resp = await checkoutSession;
-    console.log(resp.url);
     return new Response(JSON.stringify({ url: resp.url }));
   } catch (err) {
-    console.log(err);
+    console.log("Error", err);
   }
 }

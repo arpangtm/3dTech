@@ -20,9 +20,8 @@ function signup() {
   if (session) {
     redirect("/");
   }
-  console.log(email);
+
   async function handelSubmit(e: any) {
-    console.log("Submitting..");
     e.preventDefault();
     const formData = new FormData();
     formData.append("email", email);
@@ -30,15 +29,13 @@ function signup() {
     formData.append("password", password);
     formData.append("file", photo!);
 
-    console.log(formData);
     const result = await fetch("/api/auth/signup", {
       method: "POST",
-      body:formData
+      body: formData,
       // body: JSON.stringify({ username, email, password,img:formData }),
     });
 
     const data = await result.json();
-    console.log(data);
     if (data.err) {
       const err = data;
       if (err.type === "email") setError({ ...err, email_err: err.err });
@@ -132,7 +129,6 @@ function signup() {
             name="photo"
             className=""
             onChange={(e: any) => {
-              console.log(e.target.files[0]);
               setPhoto(e.target.files[0]);
             }}
           ></input>

@@ -15,20 +15,14 @@ function login() {
   }
 
   async function handleSubmit(e: any) {
-    console.log("Handle submit", email, password);
     e.preventDefault();
     const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-    // const res = await signIn("credentials", {
-    //   email,
-    //   password,
-    //   redirect: false,
-    // });
-    // console.log(res);
-    // if (res?.error) setError(res.error);
+    if (!res?.error) push("/");
+    else setError(res.error);
   }
   return (
     <div className="flex flex-col items-center mt-20 space-y-8">
@@ -89,7 +83,7 @@ function login() {
       <div>
         <a
           onClick={() => {
-            prompt("Googliee")
+            prompt("Googliee");
             signIn("google");
           }}
         >

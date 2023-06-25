@@ -11,14 +11,12 @@ function Wishlist() {
   const [products, setProducts] = useState([]);
   const { data: session, status } = useSession();
   const { push } = useRouter();
-  console.log("Products", products);
+
   useEffect(() => {
     (async function () {
-      console.log("Useeffect chalyo");
       if (status == "authenticated") {
         const list = await getWishlist();
         const product = await getProducts(list);
-        console.log(product.data);
       }
     })();
   }, [status]);
@@ -29,7 +27,6 @@ function Wishlist() {
     });
 
     const data = await response.json();
-    console.log(data);
     setProducts(data.data);
     return data;
   }
@@ -42,7 +39,6 @@ function Wishlist() {
       }
     );
     const { list } = await response.json();
-    console.log(list);
     return list;
   }
 
@@ -56,7 +52,6 @@ function Wishlist() {
       }),
     });
     const data = await response.json();
-    console.log(data);
     getProducts(data.wishlist);
   }
 
@@ -69,46 +64,53 @@ function Wishlist() {
       <div className="border-gray-800 border-2 mx-2 md:mx-10 lg:mx-2 xl:mx-40 rounded-md">
         <div className="text-3xl text-center font-bold">Wishlist</div>
         <div>
-          {products.map((item) => {
-            return (
-              <div
-                // href={`/product?id=${item.productId}`}
-                className="flex justify-around items-center my-10 p-5 gap-5 bg-gray-800 w-full"
-              >
-                <div className="w-80">
-                  <Image
-                    alt="Product"
-                    src={item.img || "/placeholderimg.png"}
-                    height={300}
-                    width={300}
-                    className="h-80 w-auto"
-                  ></Image>
-                </div>
+          {products.map(
+            (item: {
+              img: string;
+              productId: number;
+              productName: string;
+              price: number;
+            }) => {
+              return (
                 <div
-                  className="flex flex-col gap-5 cursor-pointer"
-                  onClick={() => push(`/product?id=${item.productId}`)}
+                  // href={`/product?id=${item.productId}`}
+                  className="flex justify-around items-center my-10 p-5 gap-5 bg-gray-800 w-full"
                 >
-                  <h1 className="font-bold text-xl md:text-2xl">
-                    Item Name: {item.productName}
-                  </h1>
-                  <h1 className="font-bold text-lg md:text-xl">
-                    Price: ${item.price}
-                  </h1>
-                  <a
-                    href={`/product?id=${item.productId}`}
-                    className="w-fit text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600  hover:border-2 dark:hover:border-blue-700 hover:bg-transparent dark:focus:ring-blue-800"
+                  <div className="w-80">
+                    <Image
+                      alt="Product"
+                      src={item.img || "/placeholderimg.png"}
+                      height={300}
+                      width={300}
+                      className="h-80 w-auto"
+                    ></Image>
+                  </div>
+                  <div
+                    className="flex flex-col gap-5 cursor-pointer"
+                    onClick={() => push(`/product?id=${item.productId}`)}
                   >
-                    Add to cart
-                  </a>
-                </div>
-                <div className="text-red-600 text-lg md:text-3xl w-max flex flex-col gap-5 font-bold">
-                  <div onClick={() => deleteProduct(item.productId)}>
-                    <FaTrash className="cursor-pointer"></FaTrash>
+                    <h1 className="font-bold text-xl md:text-2xl">
+                      Item Name: {item.productName}
+                    </h1>
+                    <h1 className="font-bold text-lg md:text-xl">
+                      Price: ${item.price}
+                    </h1>
+                    <a
+                      href={`/product?id=${item.productId}`}
+                      className="w-fit text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600  hover:border-2 dark:hover:border-blue-700 hover:bg-transparent dark:focus:ring-blue-800"
+                    >
+                      Add to cart
+                    </a>
+                  </div>
+                  <div className="text-red-600 text-lg md:text-3xl w-max flex flex-col gap-5 font-bold">
+                    <div onClick={() => deleteProduct(item.productId)}>
+                      <FaTrash className="cursor-pointer"></FaTrash>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            }
+          )}
         </div>
       </div>
     </section>

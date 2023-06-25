@@ -1,8 +1,10 @@
 "use client";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { Menu, Transition } from "@headlessui/react";
 import { BsFillCartFill } from "react-icons/bs";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { AiOutlineClose } from "react-icons/ai";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -13,7 +15,7 @@ interface Active {
 //Checks if loged in or not and displays returns signup button or Profile Picture
 function configureButton(session: any) {
   const { push } = useRouter();
-  console.log(session?.user);
+
   const button = session ? (
     <div className="flex space-x-5">
       <Image
@@ -55,7 +57,7 @@ function configureButton(session: any) {
 
   if (session) {
     return (
-      <Menu as="div" className="relative text-left flex">
+      <Menu as="div" className="relative text-left flex gap-4">
         <a
           href="/checkout"
           className="flex items-center space-x-2 px-2 py-1 bg-white text-black rounded-md"
@@ -75,7 +77,7 @@ function configureButton(session: any) {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 z-10 mt-2 w-80 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Menu.Items className="absolute right-0 z-10 mt-20 w-80 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="py-1">
               <Menu.Item>
                 {({ active }: Active) => (
@@ -158,6 +160,7 @@ function configureButton(session: any) {
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+  const [menuState, changeState] = useState(false);
   if (status == "loading") {
     return <div></div>;
   }
@@ -165,14 +168,20 @@ export default function Navbar() {
     <>
       <section
         className={
-          "flex justify-between items-center my-5 mx-3 sm:mx-4 lg:mx-9"
+          " w-screen flex justify-around md:justify-between md:w-auto items-center my-5 mx-3 sm:mx-4 lg:mx-9"
         }
       >
         <a href="/" className={"text-5xl"}>
           TS
         </a>
-        <div className={"flex space-x-12 items-center"}>
-          <ul className={"flex space-x-10"}>
+        <div
+          className={`gap-5 ${
+            menuState ? `inline-block` : `hidden`
+          } md:flex md:flex-row space-x-12 items-center`}
+        >
+          <ul
+            className={`flex flex-col gap-5 justify-center items-center md:flex-row md:space-x-10`}
+          >
             <a href="#">
               <li>Latest</li>{" "}
             </a>
@@ -181,6 +190,13 @@ export default function Navbar() {
             </a>
           </ul>
           {configureButton(session)}
+        </div>
+        <div
+          id="mobileMenu"
+          onClick={() => changeState(!menuState)}
+          className={`text-white block md:hidden`}
+        >
+          {menuState ? <AiOutlineClose /> : <GiHamburgerMenu />}
         </div>
       </section>
     </>

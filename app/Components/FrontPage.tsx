@@ -64,15 +64,10 @@ export default function FrontPage() {
   const [hotpicks, setHotpicks] = useState([]);
   const [toast, createToast] = useState(false);
   const { data: session, status } = useSession();
-  console.log(session);
+  // const session = useSession();
   useEffect(() => {
-    // console.log("Useeffect")
     (async function () {
-      console.log("Self Exec Func");
       if (status === "authenticated") {
-        console.log(
-          "/api/wishlist?email=" + encodeURIComponent(`${session?.user?.email}`)
-        );
         const response = await fetch(
           "/api/wishlist?email=" +
             encodeURIComponent(`${session?.user?.email}`),
@@ -80,20 +75,16 @@ export default function FrontPage() {
             method: "GET",
           }
         );
-        const products = await fetch("/api/productInfo?id=1,2,3,5,6,7", {
-          method: "GET",
-        });
-        const { data } = await products.json();
-        setHotpicks(data);
-
         try {
           const { list } = await response.json();
           setList(list);
-          console.log(list);
-        } catch {
-          console.log("User has no list");
-        }
+        } catch {}
       }
+      const products = await fetch("/api/productInfo?id=1,2,3,5,6,7", {
+        method: "GET",
+      });
+      const { data } = await products.json();
+      setHotpicks(data);
     })();
   }, [status]);
 
@@ -115,9 +106,6 @@ export default function FrontPage() {
               productInfo: string;
               price: number;
             }) => {
-              console.log(item.id);
-              console.log(wishlist);
-
               return (
                 <Card
                   wish={wishlist?.includes(item.productId) ? true : false}
