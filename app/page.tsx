@@ -12,22 +12,3 @@ export default function Home({ session }: any) {
     </>
   );
 }
-
-export async function getServerSideProps(ctx: any) {
-  console.log("ServerSideProps");
-  const session = await getSession(ctx);
-  console.log("Session", session);
-  if (!session) {
-    return {
-      props: {
-        session: "No session",
-      },
-    };
-  }
-
-  return {
-    props: {
-      session,
-    },
-  };
-}
