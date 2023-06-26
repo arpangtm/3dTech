@@ -6,25 +6,22 @@ import authLogin from "../login/authLogin";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "../../../../lib/mongoose/mongodbAdapter";
 
-const authOptions: AuthOptions = {
+const authOptions = {
   session: {
     strategy: "jwt",
   },
   adapter: MongoDBAdapter(clientPromise),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
     CredentialsProvider({
       type: "credentials",
       credentials: {},
 
       async authorize(credentials, req) {
-        const { email, password } = credentials as {
-          email: string;
-          password: string;
-        };
+        const { email, password } = credentials;
         const result = await authLogin(email, password);
         if (!result.err) {
           const user = {

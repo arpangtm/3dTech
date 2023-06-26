@@ -10,7 +10,7 @@ import { JBLHeadphones } from "../../JSXModel/JBLHeadphones";
 import { AsusRog } from "../../JSXModel/AsusRog";
 import { MISmarTV } from "../../JSXModel/MISmartTV";
 
-const productIdMap = {
+const productIdMap: any = {
   1: <Iphone12ProBlue />,
   2: <AlienwareLaptop />,
   3: <Gamingchair />,
@@ -50,7 +50,7 @@ export default function Viewer({ productId }: { productId: any }) {
             false
           </Stage>
         </Suspense>
-        <OrbitControls ref={ref} autoRotate />
+        <OrbitControls autoRotate />
       </Canvas>
     </div>
   );
