@@ -18,10 +18,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>3d TechVerse</title>
+      </head>
       <body className={inter.className}>
         <Providers>
           <Nav></Nav>
-          {children}  
+          {children}
           {/* <h2>Footer</h2> */}
         </Providers>
       </body>
