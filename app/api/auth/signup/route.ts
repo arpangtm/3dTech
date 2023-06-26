@@ -13,12 +13,6 @@ interface signupData {
   photo: File;
 }
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
 export async function POST(req: NextRequest) {
   //Parsing Formdata
   const request = await req.formData();
