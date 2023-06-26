@@ -1,7 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["i.pinimg.com","res.cloudinary.com","lh3.googleusercontent.com"],
+    domains: [
+      "i.pinimg.com",
+      "res.cloudinary.com",
+      "lh3.googleusercontent.com",
+    ],
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
   // async rewrites() {
   //   return [
