@@ -10,8 +10,12 @@ import { BsCart } from "react-icons/bs";
 async function addToWishList(
   email: any,
   id: number | null,
-  createToast: Function
+  createToast: Function,
+  status: string
 ) {
+  if (status != "authenticated") {
+    return alert("You should be logged in!");
+  }
   const response = await fetch("/api/wishlist", {
     method: "POST",
     body: JSON.stringify({
@@ -26,7 +30,15 @@ async function addToWishList(
   }
 }
 
-async function addToCart(email: any, id: number | null, createToast: Function) {
+async function addToCart(
+  email: any,
+  id: number | null,
+  createToast: Function,
+  status: string
+) {
+  if (status != "authenticated") {
+    return alert("You should be logged in!");
+  }
   const res = await fetch("/api/checkoutItems", {
     method: "POST",
     body: JSON.stringify({ email, productId: id }),
@@ -53,6 +65,7 @@ function Product() {
     productReviews: [{ userId: null, stars: null, review: "" }],
     specs: "",
   });
+
   useEffect(() => {
     (async function () {
       const response = await fetch(
@@ -77,17 +90,17 @@ function Product() {
   }
   return (
     <div className="mt-12 mx-2 sm:mx-12 lg:mx-32">
-      <h1 className="text-lg sm:text-xl lg:text-5xl font-semibold tracking-tight text-gray-900 dark:text-white">
+      <h1 className="text-lg sm:text-xl lg:text-5xl font-semibold tracking-tight text-white">
         {productData?.productName}
       </h1>
-      <ul className="mt-12 flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
+      <ul className="mt-12 flex flex-wrap text-sm font-medium text-center border-b  border-gray-700 text-gray-400">
         <li className="mr-2" onClick={() => setActive("info")}>
           <a
             href="#"
             aria-current="page"
             className={`${
               active === "info" ? "text-blue-500 bg-gray-800" : ""
-            } inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300`}
+            } inline-block p-4 rounded-t-lg hover:bg-gray-800 hover:text-gray-300`}
           >
             Info
           </a>
@@ -97,7 +110,7 @@ function Product() {
             href="#"
             className={`${
               active === "about" ? "text-blue-500 bg-gray-800" : ""
-            } inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300`}
+            } inline-block p-4 rounded-t-lg hover:bg-gray-800 hover:text-gray-300`}
           >
             About Product
           </a>
@@ -107,7 +120,7 @@ function Product() {
             href="#"
             className={`${
               active === "reviews" ? "text-blue-500 bg-gray-800" : ""
-            } inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300`}
+            } inline-block p-4 rounded-t-lg hover:bg-gray-800 hover:text-gray-300`}
           >
             Reviews
           </a>
@@ -117,7 +130,7 @@ function Product() {
             href="#"
             className={`${
               active === "features" ? "text-blue-500 bg-gray-800" : ""
-            } inline-block p-4 rounded-t-lg hover:text-gray-600 hover:bg-gray-50 dark:hover:bg-gray-800 dark:hover:text-gray-300`}
+            } inline-block p-4 rounded-t-lg hover:bg-gray-800 hover:text-gray-300`}
           >
             Specification
           </a>
@@ -172,7 +185,12 @@ function Product() {
             </button>
             <button
               onClick={() =>
-                addToCart(session?.user?.email, Number(productId), createToast)
+                addToCart(
+                  session?.user?.email,
+                  Number(productId),
+                  createToast,
+                  status
+                )
               }
               className="flex space-x-5 items-center spbg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
             >
@@ -184,7 +202,8 @@ function Product() {
                 addToWishList(
                   session?.user?.email,
                   Number(productId),
-                  createToast
+                  createToast,
+                  status
                 )
               }
               className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
@@ -199,7 +218,7 @@ function Product() {
         id="toast-simple"
         className={`fixed ${
           toast.visible ? "bottom-[5%]" : "-bottom-[10%]"
-        } left-1/2 transition-all ease-in-out duration-300 flex items-center whitespace-nowrap w-full max-w-min p-4 space-x-4 text-gray-900 bg-white divide-x divide-gray-200 rounded-lg shadow dark:text-gray-900 dark:divide-gray-700 space-x dark:bg-white`}
+        } left-1/2 transition-all ease-in-out duration-300 flex items-center whitespace-nowrap w-full max-w-min p-4 space-x-4 divide-x  rounded-lg shadow text-gray-900 divide-gray-700 space-x bg-white`}
         role="alert"
       >
         {toast.visible && toast.type == "cart" ? <BsCart /> : <AiFillHeart />}

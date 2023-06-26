@@ -83,7 +83,6 @@ function Login() {
       <div>
         <a
           onClick={() => {
-            prompt("Googliee");
             signIn("google");
           }}
         >

@@ -169,7 +169,7 @@ export default function FrontPage() {
         id="toast-simple"
         className={`fixed ${
           toast ? "bottom-[5%]" : "-bottom-[10%]"
-        } left-1/2 transition-all ease-in-out duration-300 flex items-center whitespace-nowrap w-full max-w-min p-4 space-x-4 text-gray-900 bg-white divide-x divide-gray-200 rounded-lg shadow dark:text-gray-900 dark:divide-gray-700 space-x dark:bg-white`}
+        } left-1/2 transition-all ease-in-out duration-300 flex items-center whitespace-nowrap w-full max-w-min p-4 space-x-4 divide-x rounded-lg shadow text-gray-900 divide-gray-700 space-x bg-white`}
         role="alert"
       >
         <BsCart></BsCart>
