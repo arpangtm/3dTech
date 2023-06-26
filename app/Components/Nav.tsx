@@ -142,7 +142,7 @@ export default function Navbar() {
                       <button
                         type="submit"
                         onClick={() => {
-                          signOut();
+                          signOut({ callbackUrl: "/" });
                         }}
                         className={classNames(
                           active
