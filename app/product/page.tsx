@@ -37,7 +37,7 @@ async function addToCart(email: any, id: number | null, createToast: Function) {
   }
 }
 
-function product() {
+function Product() {
   const { data: session, status } = useSession();
   const searchParams = useSearchParams();
   const [toast, createToast] = useState({ visible: false, type: undefined });
@@ -147,7 +147,7 @@ function product() {
           >
             {productData.productReviews.map((review) => {
               return (
-                <div>
+                <div key={review.userId}>
                   <h2 className="text-lg font-bold">{review.userId}</h2>
                   <p>Stars:{review.stars}</p>
                   <p>{review.review}</p>
@@ -212,4 +212,4 @@ function product() {
   );
 }
 
-export default product;
+export default Product;

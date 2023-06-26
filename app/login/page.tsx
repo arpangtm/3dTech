@@ -4,7 +4,7 @@ import Image from "next/image";
 import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 
-function login() {
+function Login() {
   const { data: session, status } = useSession();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -100,4 +100,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;

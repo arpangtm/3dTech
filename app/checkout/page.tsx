@@ -14,7 +14,7 @@ const sumPrices = (list: any) => {
   return total;
 };
 
-function checkout() {
+function Checkout() {
   const { push } = useRouter();
   const [productList, setProducts] = useState([]);
   const [dataFetched, setDataFetched] = useState(false);
@@ -65,7 +65,7 @@ function checkout() {
     (async function () {
       if (status == "authenticated") {
         let response = await fetch(
-          `/api/checkoutItems?email=${session.user?.email}`,
+          `/api/checkoutItems?email=${session?.user?.email}`,
           {
             method: "GET",
           }
@@ -97,6 +97,7 @@ function checkout() {
               return (
                 <div
                   // href={`/product?id=${item.productId}`}
+                  key={item.productId}
                   className="flex justify-around items-center my-10 p-5 gap-5 bg-gray-800 w-full"
                 >
                   <div className="w-80">
@@ -176,4 +177,4 @@ function checkout() {
   );
 }
 
-export default checkout;
+export default Checkout;

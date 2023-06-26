@@ -5,7 +5,7 @@ import { signIn, useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
 
-function signup() {
+function Signup() {
   const { data: session, status } = useSession();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -175,4 +175,4 @@ function signup() {
   );
 }
 
-export default signup;
+export default Signup;
