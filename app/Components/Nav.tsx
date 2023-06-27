@@ -142,7 +142,10 @@ export default function Navbar() {
                       <button
                         type="submit"
                         onClick={() => {
-                          signOut({ callbackUrl: "/signout" });
+                          signOut({
+                            callbackUrl:
+                              "https://3dtechverse.arpangtm.com.np/signout",
+                          });
                         }}
                         className={classNames(
                           active
