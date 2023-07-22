@@ -12,7 +12,13 @@ export default function Header() {
   useEffect(() => {
     setWidth(window.innerWidth);
     setHeight(window.innerHeight);
-  });
+    if (modelState) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [modelState]);
+
   return (
     <>
       <div
