@@ -1,4 +1,3 @@
-"use client";
 import { Suspense, useEffect, useState, useRef } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { OrbitControls, Stage } from "@react-three/drei";
@@ -9,13 +8,20 @@ export default function Header() {
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   const [modelState, setmodelState] = useState(true);
+
   useEffect(() => {
-    setWidth(window.innerWidth);
-    setHeight(window.innerHeight);
-    if (modelState) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
+    if (typeof window !== "undefined") {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+      const clientId = localStorage.getItem("clientId");
+      !clientId
+        ? localStorage.setItem("clientId", `${Math.random()}`)
+        : setmodelState(false);
+      if (modelState) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
     }
   }, [modelState]);
 
@@ -150,3 +156,13 @@ export default function Header() {
     </>
   );
 }
+
+// export function getServerSideProps() {
+//   if (cookies().has("clientId")) {
+//     return {
+//       props: {
+//         clientId: true,
+//       },
+//     };
+//   }
+// }

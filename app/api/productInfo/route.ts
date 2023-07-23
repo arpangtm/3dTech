@@ -1,7 +1,7 @@
 import dbConnection from "@/lib/mongoose";
 import productInfo from "../../../mongoose_model/productInfo";
 import { NextRequest } from "next/server";
-
+import { cookies } from "next/headers";
 export async function GET(req: NextRequest) {
   const productId = await req.nextUrl.searchParams.get("id");
   await dbConnection();

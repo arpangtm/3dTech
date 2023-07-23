@@ -9,6 +9,7 @@ import { Gamingchair } from "../../JSXModel/gamingchair";
 import { JBLHeadphones } from "../../JSXModel/JBLHeadphones";
 import { AsusRog } from "../../JSXModel/AsusRog";
 import { MISmarTV } from "../../JSXModel/MISmartTV";
+import Loading from "../Components/Loading";
 
 const productIdMap: any = {
   1: <Iphone12ProBlue />,
@@ -38,7 +39,7 @@ export default function Viewer({ productId }: { productId: any }) {
         dpr={[1, 2]}
         camera={{ fov: 50 }}
       >
-        <Suspense fallback={null}>
+        <Suspense fallback={<Loading />}>
           <Stage
             controls={ref}
             preset="rembrandt"
