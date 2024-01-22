@@ -141,8 +141,8 @@ export default function Navbar() {
                     {({ active }: Active) => (
                       <button
                         type="submit"
-                        onClick={() => {
-                          signOut({
+                        onClick={async() => {
+                          await signOut({
                             callbackUrl:
                               "https://3dtechverse.arpangtm.com.np/signout",
                           });

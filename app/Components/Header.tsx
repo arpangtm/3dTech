@@ -63,7 +63,7 @@ export default function Header() {
               </button>
             </div>
             <div className="p-6 space-y-6">
-              <p className="text-base leading-relaxed text-gray-400">
+              <div className="text-base leading-relaxed text-gray-400">
                 <p className="text-red-700">
                   **Get the Full Fledged Experience of the site in a desktop or
                   laptop with GPU acceleration enabled**{" "}
@@ -87,8 +87,8 @@ export default function Header() {
                   <li className="basis-1/2">Three JS</li>
                   <li className="basis-1/2">Stripe Payment Integration</li>
                 </ul>
-              </p>
-              <p className="text-base leading-relaxed text-gray-400">
+              </div>
+              <div className="text-base leading-relaxed text-gray-400">
                 Features to try out!
                 <ul className="list-disc">
                   <li>Authentication(Login SignUp)</li>
@@ -97,7 +97,7 @@ export default function Header() {
                   <li>Putting products to wishlist and checkout list</li>
                   <li>Checking Out (Payment integration with Stripe)</li>
                 </ul>
-              </p>
+              </div>
             </div>
             <div className="flex items-center p-6 space-x-2 border-t rounded-b border-gray-600">
               <button
