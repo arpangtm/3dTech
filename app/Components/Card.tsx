@@ -158,7 +158,7 @@ export default function Card({
 
             <button
               onClick={() => {
-                session ? addToCart(session?.user?.email, id): alert("Must Login first!");
+                session ? addToCart(session?.user?.email!, id): alert("Must Login first!");
               }}
               className="flex-1 text-white focus:ring-2 focus:outline-none font-medium rounded-lg text-sm px-4 py-2.5 text-center bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 hover:shadow-md hover:shadow-blue-200/50 focus:ring-blue-300 border-0"
             >
