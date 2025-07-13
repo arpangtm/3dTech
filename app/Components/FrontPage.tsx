@@ -93,10 +93,53 @@ export default function FrontPage() {
   }
 
   return (
-    <section className="mx-5 sm:mx-16 md:mx-24 lg:mx-28">
-      <div>
-        <h1 className="font-bold text-3xl">Today's Hot Picks🔥 </h1>
-        <div className="grid gap-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-3">
+    <section
+      id="products"
+      className="relative pt-16 pb-24 px-5 sm:px-16 md:px-24 lg:px-28 bg-black min-h-screen"
+    >
+      {/* Subtle particle overlay for transition */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+        {Array.from({ length: 30 }).map((_, i) => {
+          const size = Math.random() * 2 + 0.5;
+          const speed = Math.random() * 60 + 30;
+          const delay = Math.random() * 5;
+
+          return (
+            <div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: `${size}px`,
+                height: `${size}px`,
+                backgroundColor:
+                  i % 3 === 0
+                    ? "rgba(40, 40, 45, 0.5)"
+                    : i % 3 === 1
+                    ? "rgba(30, 30, 35, 0.5)"
+                    : "rgba(20, 20, 25, 0.5)",
+                boxShadow: `0 0 ${size * 2}px ${size / 2}px ${
+                  i % 3 === 0
+                    ? "rgba(40, 40, 45, 0.3)"
+                    : i % 3 === 1
+                    ? "rgba(30, 30, 35, 0.3)"
+                    : "rgba(20, 20, 25, 0.3)"
+                }`,
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                animation: `float ${speed}s infinite linear ${delay}s`,
+                opacity: 0.1 + Math.random() * 0.2,
+              }}
+            />
+          );
+        })}
+      </div>
+
+      {/* Content with dark theme */}
+      <div className="relative z-10">
+        <h1 className="font-bold text-3xl mb-6 inline-block bg-gradient-to-r from-gray-300 to-gray-500 bg-clip-text text-transparent shadow-sm">
+          Today's Hot Picks🔥
+        </h1>
+        <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-3">
           {hotpicks.map(
             (item: {
               id: number;
@@ -123,10 +166,12 @@ export default function FrontPage() {
           )}
         </div>
       </div>
-      <div></div>
-      <div className="mt-9">
-        <h1 className="font-bold text-3xl">Latest</h1>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3 ">
+
+      <div className="mt-16 relative z-10">
+        <h1 className="font-bold text-3xl mb-6 inline-block bg-gradient-to-r from-gray-400 to-gray-600 bg-clip-text text-transparent shadow-sm">
+          Latest
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-3">
           {Latest.map((item) => {
             return (
               <Card
@@ -144,9 +189,12 @@ export default function FrontPage() {
           })}
         </div>
       </div>
-      <div className="mt-9">
-        <h1 className="font-bold text-3xl">You Might Also Like</h1>
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-3">
+
+      <div className="mt-16 relative z-10">
+        <h1 className="font-bold text-3xl mb-6 inline-block bg-gradient-to-r from-gray-500 to-gray-700 bg-clip-text text-transparent shadow-sm">
+          You Might Also Like
+        </h1>
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-3">
           {sample_data.map((item) => {
             return (
               <Card
@@ -164,15 +212,16 @@ export default function FrontPage() {
           })}
         </div>
       </div>
-      <div></div>
+
+      {/* Toast notification with dark theme */}
       <div
         id="toast-simple"
         className={`fixed ${
           toast ? "bottom-[5%]" : "-bottom-[10%]"
-        } left-1/2 transition-all ease-in-out duration-300 flex items-center whitespace-nowrap w-full max-w-min p-4 space-x-4 divide-x rounded-lg shadow text-gray-900 divide-gray-700 space-x bg-white`}
+        } left-1/2 transform -translate-x-1/2 transition-all ease-in-out duration-300 flex items-center whitespace-nowrap w-full max-w-min p-4 space-x-4 divide-x rounded-lg shadow-md text-gray-300 divide-gray-700 space-x bg-gradient-to-r from-gray-900 to-black border border-gray-800 backdrop-blur-sm z-50`}
         role="alert"
       >
-        <BsCart></BsCart>
+        <BsCart className="text-gray-400" />
         <div className="pl-4 text-sm font-normal">Item added to cart.</div>
       </div>
     </section>

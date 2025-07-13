@@ -3,6 +3,7 @@ import { Canvas } from "@react-three/fiber";
 import { isMobile } from "react-device-detect";
 import { OrbitControls, Stage } from "@react-three/drei";
 
+import { extend } from "@react-three/fiber";
 import { Iphone12ProBlue } from "../../JSXModel/iphone";
 import { AlienwareLaptop } from "../../JSXModel/AlienwareLaptop";
 import { Gamingchair } from "../../JSXModel/gamingchair";
@@ -10,6 +11,7 @@ import { JBLHeadphones } from "../../JSXModel/JBLHeadphones";
 import { AsusRog } from "../../JSXModel/AsusRog";
 import { MISmarTV } from "../../JSXModel/MISmartTV";
 import Loading from "../Components/Loading";
+import { Badge } from "@/components/ui/badge";
 
 const productIdMap: any = {
   1: <Iphone12ProBlue />,
@@ -33,13 +35,18 @@ export default function Viewer({ productId }: { productId: any }) {
   }, []);
   return (
     <div>
-      <Canvas
-        style={{ height, width }}
-        shadows
-        dpr={[1, 2]}
-        camera={{ fov: 50 }}
-      >
-        <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading />}>
+        <div className="mt-9 left-4">
+          <Badge className="bg-green-500/20 text-green-400 border-green-500/30 z-50">
+            Interactive 3D
+          </Badge>
+        </div>
+        <Canvas
+          style={{ height, width, cursor: "grab" }}
+          shadows
+          dpr={[1, 2]}
+          camera={{ fov: 50 }}
+        >
           <Stage
             controls={ref}
             preset="rembrandt"
@@ -50,9 +57,10 @@ export default function Viewer({ productId }: { productId: any }) {
             {productIdMap[productId]}
             false
           </Stage>
-        </Suspense>
-        <OrbitControls autoRotate />
-      </Canvas>
+
+          <OrbitControls autoRotate />
+        </Canvas>
+      </Suspense>
     </div>
   );
 }

@@ -5,6 +5,13 @@ import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 import getStripe from "@/lib/mongoose/Stripe/payment";
 import { useRouter } from "next/navigation";
+import {
+  ArrowRight,
+  CreditCard,
+  Lock,
+  ShoppingCart,
+  Trash2,
+} from "lucide-react";
 
 const sumPrices = (list: any) => {
   let total = 0;
@@ -51,8 +58,9 @@ function Checkout() {
     });
     const { data } = await response.json();
     const list = await fetchItemsFromId(data.cart);
+    const addedPrice = sumPrices(list);
     setProducts(list);
-    setCost(sumPrices(list));
+    setCost(addedPrice + 0.07 * addedPrice);
   };
 
   const fetchItemsFromId = async (productIds: Array<Number>) => {
@@ -73,8 +81,9 @@ function Checkout() {
         const { data } = await response.json();
 
         const list = await fetchItemsFromId(data.cart);
+        const addedPrice = sumPrices(list);
         setProducts(list);
-        setCost(sumPrices(list));
+        setCost(addedPrice + 0.07 * addedPrice);
         setDataFetched(true);
       }
     })();
@@ -83,93 +92,182 @@ function Checkout() {
     return <div>Loading...</div>;
   }
   return (
-    <div>
-      <h1 className="text-3xl text-center font-bold">Checkout</h1>
-      <div className="flex flex-1 flex-col md:flex-row justify-center gap-8 mt-10">
-        <div className="border-gray-800 border-2 p-5 mb-36">
-          {productList.map(
-            (item: {
-              img: string;
-              productName: string;
-              price: number;
-              productId: number;
-            }) => {
-              return (
-                <div
-                  // href={`/product?id=${item.productId}`}
-                  key={item.productId}
-                  className="flex justify-around items-center my-10 p-5 gap-5 bg-gray-800 w-full"
-                >
-                  <div className="w-80">
-                    <Image
-                      alt="Product"
-                      src={item.img || "/placeholderimg.png"}
-                      height={300}
-                      width={300}
-                      className="h-36 w-auto"
-                    ></Image>
-                  </div>
-                  <div
-                    className="flex flex-col gap-5 cursor-pointer"
-                    //   onClick={() => push(`/product?id=${item.productId}`)}
-                  >
-                    <h1 className="font-bold text-xl md:text-2xl">
-                      Item Name: {item.productName}
-                    </h1>
-                    <h1 className="font-bold text-lg md:text-xl">
-                      Price: ${item.price}
-                    </h1>
-                  </div>
-                  <div className="text-red-600 text-lg md:text-3xl w-max flex flex-col gap-5 font-bold">
-                    {/* <div onClick={() => deleteProduct(item.productId)}> */}
-                    <div
-                      onClick={() =>
-                        removeFromCart(session?.user?.email, item.productId)
-                      }
-                    >
-                      <FaTrash className="cursor-pointer"></FaTrash>
-                    </div>
-                  </div>
-                </div>
-              );
-            }
-          )}
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent mb-2">
+            Checkout
+          </h1>
+          <p className="text-gray-600">Complete your purchase securely</p>
         </div>
 
-        <div className=" max-h-min">
-          <div className="max-h-min fixed bottom-0 bg-black w-full md:relative border-gray-800 border-2 p-5 flex justify-center items-center flex-col gap-5">
-            <h1 className="text-2xl font-bold">
-              Total Items:{productList.length}
-            </h1>
-            <h1 className="text-2xl font-bold">Total Cost: ${totalCost}</h1>
-            <button
-              type="submit"
-              onClick={() => handleSubmit()}
-              className="bg-orange-500 py-2 px-3 max-w-min rounded-lg flex text-center items-center disabled:opacity-25"
-              disabled={!productList.length ? true : false}
-            >
-              {checkoutState == "loading" ? (
-                <svg
-                  aria-hidden="true"
-                  className="w-6 h-6 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-white"
-                  viewBox="0 0 100 101"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Cart Items Section */}
+          <div className="lg:w-2/3">
+            <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+              <div className="bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-4">
+                <h2 className="text-xl font-semibold text-white flex items-center">
+                  <ShoppingCart className="w-5 h-5 mr-2" />
+                  Your Items ({productList.length})
+                </h2>
+              </div>
+
+              <div className="divide-y divide-gray-200">
+                {productList.map((item) => (
+                  <div
+                    key={item.productId}
+                    className="p-6 hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <div className="flex items-center gap-6">
+                      {/* Product Image */}
+                      <div className="flex-shrink-0 w-24 h-24 bg-gray-100 rounded-lg overflow-hidden">
+                        <img
+                          src={item.img || "/placeholderimg.png"}
+                          alt={item.productName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+
+                      {/* Product Details */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-1 truncate">
+                          {item.productName}
+                        </h3>
+                        <p className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                          ${item.price.toFixed(2)}
+                        </p>
+                      </div>
+
+                      {/* Remove Button */}
+                      <button
+                        onClick={() =>
+                          removeFromCart(session?.user?.email, item.productId)
+                        }
+                        className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all duration-200 group"
+                        title="Remove item"
+                      >
+                        <Trash2 className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+
+                {productList.length === 0 && (
+                  <div className="p-12 text-center">
+                    <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+                    <p className="text-gray-500 text-lg">Your cart is empty</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Order Summary Section */}
+          <div className="lg:w-1/3">
+            <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden sticky top-8">
+              <div className="bg-gradient-to-r from-blue-500 to-cyan-500 px-6 py-4">
+                <h2 className="text-xl font-semibold text-white flex items-center">
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Order Summary
+                </h2>
+              </div>
+
+              <div className="p-6 space-y-4">
+                {/* Subtotal */}
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Subtotal</span>
+                  <span className="font-semibold text-gray-900">
+                    ${sumPrices(productList)}
+                  </span>
+                </div>
+
+                {/* Tax */}
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Tax</span>
+                  <span className="font-semibold text-gray-900">
+                    ${(sumPrices(productList) * 0.07).toFixed(2)}
+                  </span>
+                </div>
+
+                {/* Shipping */}
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-600">Shipping</span>
+                  <span className="font-semibold text-gray-900">{"Free"}</span>
+                </div>
+
+                <hr className="border-gray-200" />
+
+                {/* Total */}
+                <div className="flex justify-between items-center text-lg">
+                  <span className="font-semibold text-gray-900">Total</span>
+                  <span className="font-bold text-2xl bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">
+                    ${totalCost.toFixed(2)}
+                  </span>
+                </div>
+
+                {/* Checkout Button */}
+                <button
+                  onClick={handleSubmit}
+                  disabled={!productList.length || checkoutState === "loading"}
+                  className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 disabled:from-gray-400 disabled:to-gray-400 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 disabled:scale-100 disabled:cursor-not-allowed shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                 >
-                  <path
-                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                    fill="currentColor"
-                  />
-                  <path
-                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                    fill="currentFill"
-                  />
-                </svg>
-              ) : (
-                ""
-              )}
-              Checkout
-            </button>
+                  {checkoutState === "loading" ? (
+                    <>
+                      <svg
+                        className="w-5 h-5 animate-spin"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Processing...
+                    </>
+                  ) : checkoutState === "success" ? (
+                    <>
+                      <div className="w-5 h-5 text-green-400">✓</div>
+                      Order Placed!
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="w-5 h-5" />
+                      Secure Checkout
+                      <ArrowRight className="w-5 h-5" />
+                    </>
+                  )}
+                </button>
+
+                {/* Security Badge */}
+                <div className="text-center pt-4">
+                  <p className="text-sm text-gray-500 flex items-center justify-center gap-1">
+                    <Lock className="w-4 h-4" />
+                    Your payment info is secure and encrypted
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Free Shipping Notice */}
+            {totalCost < 100 && (
+              <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <p className="text-sm text-blue-800">
+                  <strong>💡 Tip:</strong> Add ${(100 - totalCost).toFixed(2)}{" "}
+                  more to qualify for free shipping!
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

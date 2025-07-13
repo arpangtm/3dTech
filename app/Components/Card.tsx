@@ -61,110 +61,125 @@ export default function Card({
   }
 
   return (
-    <div className="w-full max-w-sm border rounded-xl shadow bg-gray-800 border-gray-700">
-      <div className="flex justify-around">
-        <a href={`/product?id=${id}`}>
-          <Image
+    <div className="w-full max-w-sm rounded-xl shadow-md bg-white border border-gray-200 transition-all duration-300 hover:shadow-xl hover:shadow-gray-300/30 hover:translate-y-[-5px]">
+      <div className="relative overflow-hidden rounded-t-xl group">
+        <a href={`/product?id=${id}`} className="block">
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+          <img
             height={300}
             width={300}
-            className="p-8 rounded-t-lg ml-5 h-80 w-full"
+            className="p-6 h-80 w-full object-contain transition-transform duration-500 group-hover:scale-105"
             src={img}
             alt="product image"
           />
         </a>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="26"
-          height="26"
-          fill={fav ? "red" : "white"}
-          className="bi bi-heart-fill mt-3 mr-3 hover:fill-red-500 hover:text-red hover:scale-110"
-          viewBox="0 0 16 16"
+        <button
           onClick={() => setWish()}
+          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-white/90 backdrop-blur-sm transition-all duration-300 hover:bg-white hover:scale-110 border border-gray-200 shadow-md"
         >
-          {" "}
-          <path
-            fillRule="evenodd"
-            d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-          />{" "}
-        </svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            fill={fav ? "#ef4444" : "#6b7280"}
+            className="bi bi-heart-fill transition-colors duration-300 hover:fill-red-500"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fillRule="evenodd"
+              d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+            />
+          </svg>
+        </button>
       </div>
-      <div className="px-5 pb-5">
-        <a href="#">
-          <h5 className="text-xl font-semibold tracking-tight text-white">
-            {name || <Skeleton></Skeleton>}
+      <div className="px-6 py-5">
+        <a href={`/product?id=${id}`} className="block group">
+          <h5 className="text-xl font-semibold tracking-tight text-gray-800 mb-2 line-clamp-2 group-hover:text-black transition-colors duration-300">
+            {name}
           </h5>
         </a>
-        <div className="flex items-center mt-2.5 mb-5">
-          <svg
-            aria-hidden="true"
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>First star</title>
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          <svg
-            aria-hidden="true"
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Second star</title>
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          <svg
-            aria-hidden="true"
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Third star</title>
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          <svg
-            aria-hidden="true"
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Fourth star</title>
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          <svg
-            aria-hidden="true"
-            className="w-5 h-5 text-yellow-300"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <title>Fifth star</title>
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-          </svg>
-          <span className="text-xs font-semibold mr-2 px-2.5 py-0.5 rounded bg-blue-200 text-blue-800 ml-3">
-            {`${stars}`}
+        <div className="flex items-center mt-2 mb-4">
+          <div className="flex">
+            {[...Array(5)].map((_, i) => (
+              <svg
+                key={i}
+                aria-hidden="true"
+                className={`w-5 h-5 ${
+                  i < stars ? "text-yellow-400" : "text-gray-300"
+                }`}
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>{`${i + 1} star`}</title>
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+              </svg>
+            ))}
+          </div>
+          <span className="text-xs font-semibold px-2.5 py-0.5 rounded bg-gradient-to-r from-blue-500 to-cyan-500 text-white ml-3">
+            {`${stars}.0`}
           </span>
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-3xl font-bold text-white">{`\$${price}`}</span>
-          <a
-            href={`/product?id=${id}`}
-            className="text-white border-2 border-blue-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-blue-700  hover:scale-110 focus:ring-blue-800"
-          >
-            See In 3d
-          </a>
-          <div
-            onClick={() => {
-              addToCart(session?.user?.email!, id);
-            }}
-            className="text-white hover:bg-blue-800 cursor-pointer focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-blue-600  hover:border-2 hover:border-blue-700 hover:bg-transparent focus:ring-blue-800"
-          >
-            Add to cart
+        <div className="mt-4">
+          <div className="flex items-center justify-between mb-4">
+            <span className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-cyan-500 bg-clip-text text-transparent">{`$${price}`}</span>
+          </div>
+
+          <div className="flex items-center justify-between gap-2">
+            <a
+              href={`/product?id=${id}`}
+              className="flex-1 text-gray-700 border border-gray-300 focus:ring-2 focus:outline-none font-medium rounded-lg text-sm px-4 py-2.5 text-center transition-all duration-300 hover:bg-gray-50 hover:shadow-md hover:shadow-gray-200/50 focus:ring-blue-300 group"
+            >
+              <span className="flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-2 group-hover:animate-pulse"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+                See In 3D
+              </span>
+            </a>
+
+            <button
+              onClick={() => {
+                addToCart(session?.user?.email, id);
+              }}
+              className="flex-1 text-white focus:ring-2 focus:outline-none font-medium rounded-lg text-sm px-4 py-2.5 text-center bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 transition-all duration-300 hover:shadow-md hover:shadow-blue-200/50 focus:ring-blue-300 border-0"
+            >
+              <span className="flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                Add to cart
+              </span>
+            </button>
           </div>
         </div>
       </div>

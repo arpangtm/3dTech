@@ -6,6 +6,7 @@ import { BsFillCartFill } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
 import { useSession } from "next-auth/react";
 import { BsCart } from "react-icons/bs";
+import ProductSkeletonDemo from "./loading";
 
 async function addToWishList(
   email: any,
@@ -86,21 +87,24 @@ function Product() {
   }, []);
 
   if (!fetched) {
-    return <div>Loading..</div>;
+    return <ProductSkeletonDemo />;
   }
   return (
     <div className="mt-12 mx-2 sm:mx-12 lg:mx-32">
-      <h1 className="text-lg sm:text-xl lg:text-5xl font-semibold tracking-tight text-white">
+      <h1 className="text-lg sm:text-xl lg:text-5xl font-semibold tracking-tight text-slate-800">
         {productData?.productName}
       </h1>
-      <ul className="mt-12 flex flex-wrap text-sm font-medium text-center border-b  border-gray-700 text-gray-400">
+
+      <ul className="mt-12 flex flex-wrap text-sm font-medium text-center border-b border-slate-200 text-slate-600">
         <li className="mr-2" onClick={() => setActive("info")}>
           <a
             href="#"
             aria-current="page"
             className={`${
-              active === "info" ? "text-blue-500 bg-gray-800" : ""
-            } inline-block p-4 rounded-t-lg hover:bg-gray-800 hover:text-gray-300`}
+              active === "info"
+                ? "text-blue-600 bg-blue-50 border-b-2 border-blue-600"
+                : ""
+            } inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800 transition-all duration-200`}
           >
             Info
           </a>
@@ -109,8 +113,10 @@ function Product() {
           <a
             href="#"
             className={`${
-              active === "about" ? "text-blue-500 bg-gray-800" : ""
-            } inline-block p-4 rounded-t-lg hover:bg-gray-800 hover:text-gray-300`}
+              active === "about"
+                ? "text-blue-600 bg-blue-50 border-b-2 border-blue-600"
+                : ""
+            } inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800 transition-all duration-200`}
           >
             About Product
           </a>
@@ -119,8 +125,10 @@ function Product() {
           <a
             href="#"
             className={`${
-              active === "reviews" ? "text-blue-500 bg-gray-800" : ""
-            } inline-block p-4 rounded-t-lg hover:bg-gray-800 hover:text-gray-300`}
+              active === "reviews"
+                ? "text-blue-600 bg-blue-50 border-b-2 border-blue-600"
+                : ""
+            } inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800 transition-all duration-200`}
           >
             Reviews
           </a>
@@ -129,8 +137,10 @@ function Product() {
           <a
             href="#"
             className={`${
-              active === "features" ? "text-blue-500 bg-gray-800" : ""
-            } inline-block p-4 rounded-t-lg hover:bg-gray-800 hover:text-gray-300`}
+              active === "features"
+                ? "text-blue-600 bg-blue-50 border-b-2 border-blue-600"
+                : ""
+            } inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800 transition-all duration-200`}
           >
             Specification
           </a>
@@ -142,28 +152,35 @@ function Product() {
           <p
             className={`${
               active === "info" ? "block " : "hidden"
-            } transition mt-12 whitespace-pre-line`}
+            } transition mt-12 whitespace-pre-line text-slate-700 leading-relaxed`}
           >
             {productData.productInfo}
           </p>
           <p
             className={`${
               active === "about" ? "block " : "hidden"
-            } transition mt-12 whitespace-pre-line`}
+            } transition mt-12 whitespace-pre-line text-slate-700 leading-relaxed`}
           >
             {productData.aboutProduct}
           </p>
           <div
             className={`${
               active === "reviews" ? "block " : "hidden"
-            } transition mt-12`}
+            } transition mt-12 space-y-6`}
           >
             {productData.productReviews.map((review) => {
               return (
-                <div key={review.userId}>
-                  <h2 className="text-lg font-bold">{review.userId}</h2>
-                  <p>Stars:{review.stars}</p>
-                  <p>{review.review}</p>
+                <div
+                  key={review.userId}
+                  className="p-4 bg-slate-50 rounded-lg border border-slate-200"
+                >
+                  <h2 className="text-lg font-bold text-slate-800">
+                    {review.userId}
+                  </h2>
+                  <p className="text-slate-600 font-medium">
+                    Stars: {review.stars}
+                  </p>
+                  <p className="text-slate-700 mt-2">{review.review}</p>
                 </div>
               );
             })}
@@ -171,16 +188,16 @@ function Product() {
           <div
             className={`${
               active === "features" ? "block " : "hidden"
-            } transition mt-12 whitespace-pre-line`}
+            } transition mt-12 whitespace-pre-line text-slate-700 leading-relaxed`}
           >
             {`${productData.specs}`}
           </div>
         </div>
+
         <div className="rounded-r-md">
           <Viewer productId={Number(productId)}></Viewer>
-          <div className="mt-14 flex space-x-14">
-            <button className=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-              {" "}
+          <div className="mt-14 flex space-x-4">
+            <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
               Buy Now
             </button>
             <button
@@ -192,10 +209,10 @@ function Product() {
                   status
                 )
               }
-              className="flex space-x-5 items-center spbg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              className="flex space-x-2 items-center bg-transparent hover:bg-blue-600 text-blue-600 font-semibold hover:text-white py-3 px-6 border border-blue-600 hover:border-transparent rounded-lg transition-all duration-200"
             >
-              <span>Add To Cart </span>
-              <BsFillCartFill></BsFillCartFill>
+              <span>Add To Cart</span>
+              <BsFillCartFill />
             </button>
             <button
               onClick={() =>
@@ -206,23 +223,26 @@ function Product() {
                   status
                 )
               }
-              className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+              className="bg-transparent hover:bg-blue-600 text-blue-600 font-semibold hover:text-white py-3 px-6 border border-blue-600 hover:border-transparent rounded-lg transition-all duration-200"
             >
-              {" "}
               Add to Wishlist
             </button>
           </div>
         </div>
       </div>
+
       <div
         id="toast-simple"
         className={`fixed ${
           toast.visible ? "bottom-[5%]" : "-bottom-[10%]"
-        } left-1/2 transition-all ease-in-out duration-300 flex items-center whitespace-nowrap w-full max-w-min p-4 space-x-4 divide-x  rounded-lg shadow text-gray-900 divide-gray-700 space-x bg-white`}
+        } left-1/2 transition-all ease-in-out duration-300 flex items-center whitespace-nowrap w-full max-w-min p-4 space-x-4 rounded-lg shadow-lg text-slate-700 bg-white border border-slate-200`}
         role="alert"
       >
-        {toast.visible && toast.type == "cart" ? <BsCart /> : <AiFillHeart />}
-
+        {toast.visible && toast.type == "cart" ? (
+          <BsCart className="text-blue-600" />
+        ) : (
+          <AiFillHeart className="text-red-500" />
+        )}
         <div className="pl-4 text-sm font-normal">
           Item added to {toast.type}.
         </div>
