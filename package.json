@@ -45,6 +45,7 @@
   },
   "devDependencies": {
     "@types/multiparty": "^0.0.33",
+    "@types/three": "^0.178.1",
     "multiparty": "^4.2.3"
   },
   "description": "Just a hobby project",

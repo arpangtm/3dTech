@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+import React, { useEffect } from 'react';
 
 const ProductSkeleton = () => {
   return (
@@ -58,7 +59,7 @@ const ProductSkeleton = () => {
 const ProductSkeletonDemo = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   
-  React.useEffect(() => {
+  useEffect(() => {
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
