@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect } from 'react';
+"use client";
+import React, { useEffect } from "react";
 
 const ProductSkeleton = () => {
   return (
@@ -36,7 +36,7 @@ const ProductSkeleton = () => {
         <div className="w-full md:w-1/2">
           {/* Product Viewer Skeleton */}
           <div className="h-64 md:h-80 bg-slate-200 rounded-lg mb-14"></div>
-          
+
           {/* Action Buttons Skeleton */}
           <div className="flex space-x-4">
             <div className="h-12 w-28 bg-slate-200 rounded-lg"></div>
@@ -58,13 +58,13 @@ const ProductSkeleton = () => {
 // Demo component to show skeleton and loaded states
 const ProductSkeletonDemo = () => {
   const [isLoading, setIsLoading] = React.useState(true);
-  
+
   useEffect(() => {
     // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 3000);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -75,14 +75,7 @@ const ProductSkeletonDemo = () => {
   if (isLoading) {
     return (
       <div>
-        <div className="fixed top-4 right-4 z-10">
-          <button
-            onClick={handleToggle}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Show Loaded State
-          </button>
-        </div>
+        <div className="fixed top-4 right-4 z-10"></div>
         <ProductSkeleton />
       </div>
     );
@@ -90,15 +83,8 @@ const ProductSkeletonDemo = () => {
 
   return (
     <div>
-      <div className="fixed top-4 right-4 z-10">
-        <button
-          onClick={handleToggle}
-          className="bg-slate-600 hover:bg-slate-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Show Skeleton
-        </button>
-      </div>
-      
+      <div className="fixed top-4 right-4 z-10"></div>
+
       {/* Simulated loaded content */}
       <div className="mt-12 mx-2 sm:mx-12 lg:mx-32">
         <h1 className="text-lg sm:text-xl lg:text-5xl font-semibold tracking-tight text-slate-800">
@@ -107,22 +93,34 @@ const ProductSkeletonDemo = () => {
 
         <ul className="mt-12 flex flex-wrap text-sm font-medium text-center border-b border-slate-200 text-slate-600">
           <li className="mr-2">
-            <a href="#" className="text-blue-600 bg-blue-50 border-b-2 border-blue-600 inline-block p-4 rounded-t-lg">
+            <a
+              href="#"
+              className="text-blue-600 bg-blue-50 border-b-2 border-blue-600 inline-block p-4 rounded-t-lg"
+            >
               Info
             </a>
           </li>
           <li className="mr-2">
-            <a href="#" className="inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800">
+            <a
+              href="#"
+              className="inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800"
+            >
               About Product
             </a>
           </li>
           <li className="mr-2">
-            <a href="#" className="inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800">
+            <a
+              href="#"
+              className="inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800"
+            >
               Reviews
             </a>
           </li>
           <li className="mr-2">
-            <a href="#" className="inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800">
+            <a
+              href="#"
+              className="inline-block p-4 rounded-t-lg hover:bg-slate-50 hover:text-slate-800"
+            >
               Specification
             </a>
           </li>
@@ -131,9 +129,10 @@ const ProductSkeletonDemo = () => {
         <div className="flex flex-col-reverse md:flex-row space-x-0 lg:space-x-6">
           <div className="w-full md:w-1/2">
             <p className="mt-12 text-slate-700 leading-relaxed">
-              This is sample product information that would be loaded from your API. 
-              It includes details about the product features, benefits, and usage instructions.
-              The skeleton screen provides a smooth loading experience while this content loads.
+              This is sample product information that would be loaded from your
+              API. It includes details about the product features, benefits, and
+              usage instructions. The skeleton screen provides a smooth loading
+              experience while this content loads.
             </p>
           </div>
 
@@ -141,7 +140,7 @@ const ProductSkeletonDemo = () => {
             <div className="h-64 md:h-80 bg-slate-100 rounded-lg mb-14 flex items-center justify-center">
               <span className="text-slate-500">Product Image/Viewer</span>
             </div>
-            
+
             <div className="flex space-x-4">
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200">
                 Buy Now

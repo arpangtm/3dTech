@@ -7,7 +7,7 @@ import { Button } from "../../components/ui/button";
 import { ArrowRight, Play } from "lucide-react";
 import * as THREE from "three";
 import { Iphone12ProBlue } from "@/JSXModel/iphone";
-import { MISmarTV } from "@/JSXModel/MISmartTV";
+import { MISmartTV } from "@/JSXModel/MISmartTV";
 import { AsusRog } from "@/JSXModel/AsusRog";
 import { JBLHeadphones } from "@/JSXModel/JBLHeadphones";
 
@@ -100,7 +100,7 @@ export default function Hero() {
           shadows
           dpr={[1, 2]}
           performance={{ min: 0.5 }}
-          style={{cursor: "grab"}}
+          style={{ cursor: "grab" }}
         >
           {/* Improved Lighting Setup */}
           <ambientLight intensity={0.3} />
@@ -139,7 +139,7 @@ export default function Hero() {
           />
 
           {/* Smart TV positioned to the left */}
-          <MISmarTV position={[-4, -1, 0]} rotation={[0, 0.4, 0]} scale={1} />
+          <MISmartTV position={[-4, -1, 0]} rotation={[0, 0.4, 0]} scale={1} />
 
           {/* Asus ROG positioned behind and slightly elevated */}
           <AsusRog position={[-2, 2, -2]} rotation={[0, 0.2, 0]} scale={1} />

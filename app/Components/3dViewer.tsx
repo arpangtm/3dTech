@@ -6,19 +6,19 @@ import { OrbitControls, Stage } from "@react-three/drei";
 import { extend } from "@react-three/fiber";
 import { Iphone12ProBlue } from "../../JSXModel/iphone";
 import { AlienwareLaptop } from "../../JSXModel/AlienwareLaptop";
-import { Gamingchair } from "../../JSXModel/gamingchair";
+import { GamingChair } from "../../JSXModel/gamingchair";
 import { JBLHeadphones } from "../../JSXModel/JBLHeadphones";
 import { AsusRog } from "../../JSXModel/AsusRog";
-import { MISmarTV } from "../../JSXModel/MISmartTV";
+import { MISmartTV } from "../../JSXModel/MISmartTV";
 import Loading from "../Components/Loading";
 import { Badge } from "@/components/ui/badge";
 
 const productIdMap: any = {
   1: <Iphone12ProBlue />,
   2: <AlienwareLaptop />,
-  3: <Gamingchair />,
+  3: <GamingChair />,
   4: <AlienwareLaptop />,
-  5: <MISmarTV />,
+  5: <MISmartTV />, 
   6: <JBLHeadphones />,
   7: <AsusRog />,
 };
